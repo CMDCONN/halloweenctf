@@ -1,0 +1,4 @@
+# By order of Ravenhollow Police: crawlers keep out of active investigations.
+User-agent: *
+Disallow: /east-wing
+Disallow: /coroners-office
