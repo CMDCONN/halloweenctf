@@ -20,3 +20,11 @@ export const SOLUTION = {
   method: 'nightshade_latte',
   motive: 'bens_party',
 }
+
+// Bonus easter-egg flags — NOT part of the murder-mystery case, no story clue, just quick extra points.
+// Use the EXTRA{...} format (not HALLOW{...}) so they're obviously distinct from the case flags.
+// The third lives in src/index.css (client-side, not imported here) — see the Bonus flags table in README.md.
+export const BONUS_FLAGS = {
+  header: 'EXTRA{ch3ck_3v3ry_h34d3r}', // every HTTP response carries an X-Candy-Bowl header
+  hiddenPage: 'EXTRA{tr1ck_0r_fl4g}', // /trick-or-treat — another robots.txt Disallow entry
+}

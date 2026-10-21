@@ -76,7 +76,8 @@ would not stop talking about Ben's birthday party.
 
 ## Flags
 
-Flag format: `HALLOW{...}`. Server-side flags live in `server/flags.js`; client-side ones are noted below.
+Flag format: `HALLOW{...}` for the 9 case flags below (bonus flags use `EXTRA{...}` — see further down).
+Server-side flags live in `server/flags.js`; client-side ones are noted below.
 After changing a seeded flag (6, 7, 8), bump `SCHEMA_VERSION` in `server/db.js` so the database rebuilds.
 Each flag is one piece of the case:
 
@@ -123,6 +124,25 @@ Each flag is one piece of the case:
    nightshade from arsenic and latte from cupcake, flag 6 gives the motive, and flags 7 + 8 name Maryum. A
    correct accusation shows an epilogue and the flag. The answer lives in `SOLUTION` in `server/flags.js`; its
    values must match the option ids in `src/pages/Accuse.tsx`.
+
+### Bonus flags (easter eggs, not part of the case)
+
+Three extra, easier flags with no story content — just quick wins for players who like poking around.
+These use the format `EXTRA{...}` instead of `HALLOW{...}` so they're obviously distinct from the 9 case
+flags above. Defined in `BONUS_FLAGS` in `server/flags.js` (the CSS one lives directly in `src/index.css`).
+
+| Clue | Challenge | Difficulty | Flag | Defined in |
+| --- | --- | --- | --- | --- |
+| Check your headers | HTTP headers | Trivial | `EXTRA{ch3ck_3v3ry_h34d3r}` | `server/index.js` (`X-Candy-Bowl` on every response) |
+| View source on the stylesheet | View source | Trivial | `EXTRA{st1tch3d_1nt0_th3_css}` | `src/index.css` |
+| Another robots.txt entry | robots.txt | Trivial | `EXTRA{tr1ck_0r_fl4g}` | `server/index.js` (`/trick-or-treat`) |
+
+- **Headers** — open DevTools → Network, load any page, and check the response headers on literally any
+  request. `X-Candy-Bowl` is there from the first page load, no login required.
+- **Stylesheet** — `Ctrl+U` isn't enough here since the CSS is its own file; open DevTools → Sources (or
+  Network) and view the stylesheet directly, or just `curl` it. It's a CSS custom property
+  (`--bonus-flag`) rather than a comment, so it survives the production minifier.
+- **robots.txt** — same file as flag 2, one more `Disallow` line: `/trick-or-treat`. No login required.
 
 ### Notes
 

@@ -1,4 +1,8 @@
 :root {
+  /* BONUS CHALLENGE (easy, unrelated to the case): a custom property, not a comment — comments get
+     stripped by the production CSS minifier, but this value doesn't. View source on this stylesheet. */
+  --bonus-flag: 'EXTRA{st1tch3d_1nt0_th3_css}';
+
   --bg: #0b0812;
   --surface: rgba(24, 16, 36, 0.88);
   --surface-2: rgba(40, 26, 58, 0.9);

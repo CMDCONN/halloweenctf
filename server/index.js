@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { db } from './db.js'
-import { FLAGS, SOLUTION } from './flags.js'
+import { FLAGS, SOLUTION, BONUS_FLAGS } from './flags.js'
 import {
   SESSION_COOKIE,
   SESSION_TTL_MS,
@@ -20,6 +20,12 @@ const USERNAME_RE = /^[a-zA-Z0-9_]{3,20}$/
 
 const app = express()
 app.use(express.json({ limit: '16kb' }))
+
+// BONUS CHALLENGE (easy, unrelated to the case): every response carries this header — check your network tab.
+app.use((_req, res, next) => {
+  res.set('X-Candy-Bowl', BONUS_FLAGS.header)
+  next()
+})
 
 // ---------- helpers ----------
 
@@ -458,6 +464,36 @@ app.get('/east-wing', (_req, res) => {
        a Grind Reaper cup lies on its side, a few dark berries crushed into the dregs. A phone glows on the
        floorboards: <em>"Speech for Ben's party — draft 14"</em>. Scratched into the dust beside the outline:</p>
     <code>${FLAGS.eastWing}</code>
+  </main>
+</body>
+</html>`)
+})
+
+// BONUS CHALLENGE (easy, unrelated to the case): listed as Disallowed in public/robots.txt, no story content.
+app.get('/trick-or-treat', (_req, res) => {
+  res.type('html').send(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trick or Treat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet" />
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 16px; box-sizing: border-box;
+           background: radial-gradient(circle at 50% 30%, #1a1a2a, #050307 70%); color: #d8cfe6;
+           font-family: Georgia, serif; text-align: center; }
+    h1 { font-family: Creepster, cursive; font-size: 3.5rem; color: #ff7a18; margin: 0 0 16px;
+         text-shadow: 0 0 20px rgba(255, 122, 24, .6); letter-spacing: 3px; }
+    p { max-width: 520px; line-height: 1.7; font-style: italic; }
+    code { display: inline-block; margin-top: 24px; padding: 12px 18px; border: 1px dashed #ff7a18;
+           color: #8bd450; font-size: 1.1rem; background: rgba(0,0,0,.4); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>🍬 Trick or Treat 🍬</h1>
+    <p>No corpses here — just a bowl of candy somebody left by the door. A few wrappers rustle in the wind.</p>
+    <code>${BONUS_FLAGS.hiddenPage}</code>
   </main>
 </body>
 </html>`)
